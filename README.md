@@ -1,9 +1,11 @@
-# HyperLogLog Algoritması ve Python Implementasyonu
+# HyperLogLog Algoritması ve Analizi
 
 ## Proje Açıklaması
-Bu projede HyperLogLog algoritmasının Python ile implementasyonu yapılmıştır.  
+Bu projede HyperLogLog algoritması tanıtılmıştır. 
+Zaman-bellek karmaşıklığı, avantaj ve dezavantajları vb. konularla analizi yapılmıştır.  
+Python ile implementasyonu yapılmıştır.  
 HyperLogLog, büyük veri sistemlerinde farklı eleman sayısını yaklaşık olarak hesaplamak için kullanılan olasılıksal bir algoritmadır.  
-Algoritma, milyonlarca veri içinden **unique (farklı) eleman sayısını** tahmin ederken çok düşük bellek kullanır.
+Algoritma, milyonlarca veri içinden **unique (benzersiz) eleman sayısını** tahmin ederken çok düşük bellek kullanır.
 
 ## Problem Tanımı
 Büyük veri sistemlerinde veri setleri milyonlarca hatta milyarlarca elemandan oluşabilir.  
@@ -11,15 +13,17 @@ Farklı eleman sayısını tam olarak hesaplamak, her bir elemanı saklamayı ge
 
 HyperLogLog algoritması, bu problemi **çok az bellekle ve yüksek hızda yaklaşık olarak** çözer.
 
+**Algoritmanın nasıl çalıştığı sunum videosunda anlatılmıştır.**
+
 ## Kullanılan Teknolojiler
 - Python 3  
-- hashlib  
-- random  
+- hashlib : Projede gelen verinin hashlenmesi(şifrelenmesi) için kullanılmıştır. 
+- random : Projede veri kümesini rastgele sayılarla doldurmak için kullanılmıştır.  
 
 ## Kurulum ve Çalıştırma
 1. Projeyi klonlayın:
 ```bash
-git clone https://github.com/kullanici/hyperloglog
+git clone https://github.com/emirccnz/HyperLogLog-Algoritmasi-ve-Analizi.git
 ```
 2. Python dosyasını çalıştırın:
 ```bash
@@ -34,6 +38,8 @@ Bucket Sayısı = 10 iken:
 Bucket Sayısı = 12 iken:
 
 ![Örnek Çıktı 2](örnek-cikti-2.png)
+
+Örnek çıktılarda da belirtildiği üzere bucket sayısı genellikle tahmin hassasiyetini arttırır ve algoritma gerçeğe yakın sonuç verir.
 
 ## Kaynaklar:
 https://en.wikipedia.org/wiki/HyperLogLog 
