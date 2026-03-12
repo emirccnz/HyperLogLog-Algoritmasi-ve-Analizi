@@ -27,4 +27,17 @@ python hyperloglog.py
 ```
 ## Örnek Çıktılar:
 ### 1.
-Bucket Sayısı = 10 iken
+Bucket Sayısı = 10 iken:
+
+![Örnek Çıktı 1](örnek-cikti-1.png)
+### 2.
+Bucket Sayısı = 12 iken:
+
+![Örnek Çıktı 2](örnek-cikti-2.png)
+
+## Kaynaklar:
+https://en.wikipedia.org/wiki/HyperLogLog 
+
+https://ardabatuhandemir.medium.com/redis-hyperloglog-hll-python-ile-nltk-dijital-k%C3%BCt%C3%BCphanesinin-analizi-hyperloglog-algoritmas%C4%B1-99a47daea0ca 
+
+https://chatgpt.com/
