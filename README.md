@@ -28,13 +28,14 @@ HyperLogLog gelen veriyi rastgele olarak hashler ve bit tipine dönüştürür. 
 5. **Tahmin Hesaplama**  
    - Tüm bucket’larda saklanan değerler kullanılarak **harmonik ortalama** benzeri bir formülle tahmin yapılır:  
 
-   \[
-   E = \alpha_m \cdot m^2 \cdot \left(\sum_{j=1}^{m} 2^{-M[j]}\right)^{-1}
-   \]
+    `E = αm * m² * ( 1 / Σ(2^(-M[j])) )`
 
-   - Burada:
-     - \(M[j]\) → j’inci bucket’taki maksimum leading zero sayısı  
-     - \(\alpha_m\) → bias düzeltme katsayısı  
+   Burada:
+
+   - **E** → Tahmin edilen unique eleman sayısı  
+   - **m** → Bucket sayısı, m = 2^b  
+   - **M[j]** → j'inci bucket'ta saklanan değer (leading zero sayısı)  
+   - **αm** → Bias düzeltme katsayısı  
 
 6. **Merge (birleştirme)**
 
@@ -42,3 +43,82 @@ HyperLogLog gelen veriyi rastgele olarak hashler ve bit tipine dönüştürür. 
    - HyperLogLog’ler, dağıtık sistemlerde veya farklı veri setlerinde **register’larını kaybetmeden birleştirilebilir**.  
    - Her bucket için maksimum değer alınır.
 
+## HyperLogLog Algoritması Analizi
+
+### Best Case (En İyi Durum)
+
+En iyi durumda hash fonksiyonu verileri bucket’lara dengeli bir şekilde dağıtır ve her eleman için aşağıdaki işlemler yapılır:
+
+- Hash değerinin hesaplanması  
+- Bucket numarasının belirlenmesi  
+- İlgili register değerinin güncellenmesi  
+
+Bu işlemler sabit sayıda olduğu için işlem süresi değişmez.
+
+**Zaman Karmaşıklığı:**  
+O(1)
+
+**Bellek Karmaşıklığı:**  
+O(m)  
+Burada m = 2^b olup bucket sayısını ifade eder.
+
+### Average Case (Ortalama Durum)
+
+Ortalama durumda hash fonksiyonu verileri bucket’lara rastgele ve dengeli bir şekilde dağıtır. 
+Algoritma her eleman için yine aynı sabit işlemleri gerçekleştirir.
+Bu nedenle her eleman için işlem süresi yine sabittir.
+
+**Zaman Karmaşıklığı:**  
+O(1)
+
+n adet veri işlendiğinde toplam süre:
+
+O(n)
+
+### Worst Case (En Kötü Durum)
+
+En kötü durumda hash fonksiyonu verileri bucket’lara dengesiz dağıtabilir. 
+Bazı bucket’lar daha fazla veri alırken bazıları boş kalabilir. Bu durum tahmin doğruluğunu etkileyebilir ancak algoritmanın çalışma süresi yine değişmez çünkü her eleman için yapılan işlem sayısı sabittir.
+
+**Zaman Karmaşıklığı:**  
+O(1)
+
+**Bellek Karmaşıklığı:**  
+O(m)
+
+Genel durumda HyperLogLog algoritması her durumda sabit işlemleri yapacağı için karmaşıklık değişmez ancak bucket sayısı gibi parametreler algoritmanın doğruluğunu etkileyebilir. 
+
+## Avantajlar ve Dezavantajlar
+
+### Avantajlar
+
+**1. Çok düşük bellek kullanımı**  
+HyperLogLog algoritması milyonlarca hatta milyarlarca veri için yalnızca birkaç kb bellek kullanır. 
+Bu, tüm verileri saklayan klasik yöntemlere göre büyük bir avantajdır.
+
+**2. Büyük veri setlerinde yüksek performans**  
+Algoritma her veri için sabit sayıda işlem yaptığı için veri büyüklüğü artsa bile performans büyük ölçüde korunur.
+
+**3. Dağıtık sistemlere uygunluk**  
+HyperLogLog yapıları kolayca birleştirilebilir. 
+Bu sayede farklı sistemlerde hesaplanan sonuçlar tek bir tahmin hâline getirilebilir.
+
+**4. Streaming veri ile çalışabilme**  
+Veri akışı sürekli olsa bile tüm veriyi saklamaya gerek yoktur. 
+Yeni gelen her veri yalnızca ilgili bucket değerini günceller.
+
+### Dezavantajlar
+
+**1. Tam sonuç üretmez**  
+HyperLogLog algoritması kesin sonuç değil yaklaşık sonuç üretir.
+
+**2. Küçük veri setlerinde doğruluk düşebilir**  
+Algoritma özellikle çok büyük veri setleri için tasarlanmıştır. 
+Küçük veri setlerinde hata oranı daha belirgin olabilir.
+
+**3. Elemanların kendisi saklanmaz**  
+Algoritma yalnızca farklı eleman sayısının tahminini verir. 
+Veri setinde hangi elemanların bulunduğu bilgisi tutulmaz.
+
+**4. Hash fonksiyonuna bağımlıdır**  
+Algoritmanın doğruluğu kullanılan hash fonksiyonunun veriyi ne kadar dengeli dağıttığına bağlıdır.
