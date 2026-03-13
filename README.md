@@ -41,6 +41,12 @@ Bucket Sayısı = 12 iken:
 
 Örnek çıktılarda da belirtildiği üzere bucket sayısı genellikle tahmin hassasiyetini arttırır ve algoritma gerçeğe yakın sonuç verir.
 
+
+Proje Sunum Vidosuna Aşağıdaki Linten Ulaşabilirsiniz.
+
+https://youtu.be/yRxswxNYywE
+
+
 ## Kaynaklar:
 https://en.wikipedia.org/wiki/HyperLogLog 
 
